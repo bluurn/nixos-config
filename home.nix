@@ -3,16 +3,27 @@
 {
   home.username = "vova";
   home.homeDirectory = "/home/vova";
+  home.file.".config/nvim".source =
+    config.lib.file.mkOutOfStoreSymlink
+    "/home/vova/projects/lazyvim-config";
   home.stateVersion = "25.11";
   home.packages = with pkgs; [
     bat
     eza
     fd
     fzf
+    gcc
+    git
     jq
+    lazygit
     ripgrep
+    starship
+    tree-sitter
+    unzip
     wget
     wl-clipboard
+    jetbrains-mono
+    nerd-fonts.jetbrains-mono
     zoxide
   ];
 
@@ -36,6 +47,15 @@
       gst = "git status";
       rebuild = "sudo nixos-rebuild switch";
     };
+    initContent = ''
+      eval "$(zoxide init zsh)"
+      eval "$(direnv hook zsh)"
+      eval "$(starship init zsh)"
+    '';
+  };
+
+  programs.starship = {
+    enable = true;
   };
 
   programs.neovim = {
@@ -43,11 +63,6 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-
-    extraLuaConfig = ''
-      vim.opt.clipboard = "unnamedplus"
-      vim.opt.mouse = "a"
-    '';
   };
 
   programs.direnv = {
