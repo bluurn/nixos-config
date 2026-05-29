@@ -12,22 +12,11 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      nur = import (builtins.fetchTarball {
-        url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
-      }) {
-        pkgs = prev;
-      };
-    })
-  ];
-
   nix.gc = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 14d";
   };
-
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -39,6 +28,8 @@
   };
 
   boot.extraModprobeConfig = ''
+    options btusb enable_autosuspend=n
+    options bluetooth disable_ertm=Y
     options iwlwifi power_save=1
   '';
 
@@ -68,7 +59,10 @@
     settings = {
       General = {
         Enable = "Source,Sink,Media,Socket";
-	Experimental = true;
+        Experimental = false;
+        KernelExperimental = false;
+        FastConnectable = true;
+        JustWorksRepairing = "always";
       };
     };
   };
@@ -92,9 +86,16 @@
     nvidiaBusId = "PCI:1:0:0";
   };
   hardware.nvidia.powerManagement.enable = true;
+  hardware.nvidia.powerManagement.finegrained = false;
   hardware.steam-hardware.enable = true;
   powerManagement.enable = true;
   powerManagement.cpuFreqGovernor = "powersave";
+
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend";
+    HandleLidSwitchExternalPower = "ignore";
+    IdleAction = "ignore";
+  };
 
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
@@ -134,6 +135,14 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+  };
+
+  services.pipewire.wireplumber.extraConfig.bluetoothEnhancements = {
+    "monitor.bluez.properties" = {
+      "bluez5.enable-sbc-xq" = true;
+      "bluez5.enable-msbc" = true;
+      "bluez5.enable-hw-volume" = true;
+    };
   };
 
   security.rtkit.enable = true;

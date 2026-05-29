@@ -1,0 +1,36 @@
+{ config, pkgs, ... }:
+
+{
+  imports = [
+    ./hardware.nix
+  ];
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  networking.hostName = "t480";
+  time.timeZone = "Europe/Berlin";
+
+  users.users.vova = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "networkmanager" ];
+  };
+
+  networking.networkmanager.enable = true;
+
+  services.xserver.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
+
+  programs.zsh.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    git
+    curl
+    wget
+    lazygit
+  ];
+
+  programs.firefox.enable = true;
+
+  system.stateVersion = "25.11";
+}
