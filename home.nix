@@ -3,6 +3,10 @@
 {
   home.username = "vova";
   home.homeDirectory = "/home/vova";
+  # rm -rf ~/.config/nvim
+  # mkdir -p ~/projects
+  # git clone https://github.com/LazyVim/starter ~/projects/lazyvim-config
+  # rm -rf ~/projects/lazyvim-config/.git
   home.file.".config/nvim".source =
     config.lib.file.mkOutOfStoreSymlink
     "/home/vova/projects/lazyvim-config";
