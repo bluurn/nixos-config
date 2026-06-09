@@ -10,8 +10,8 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
-    let
+  outputs = { self, nixpkgs, home-manager, ... }:
+  let
     system = "x86_64-linux";
   in {
     nixosConfigurations.t480 = nixpkgs.lib.nixosSystem {
@@ -20,12 +20,14 @@
       modules = [
         ./configuration.nix
 
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.vova = import ./home.nix;
-          }
+        home-manager.nixosModules.home-manager
+
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+
+          home-manager.users.vova = import ./home.nix;
+        }
       ];
     };
   };
