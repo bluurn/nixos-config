@@ -7,12 +7,6 @@
 
   programs.firefox = {
     enable = true;
-
-    profiles.default = {
-      extensions.packages = with pkgs.firefox-addons; [
-        ublock-origin
-      ];
-    };
   };
 
   programs.git = {
@@ -30,4 +24,3 @@
     fzf
   ];
 }
-
