@@ -18,15 +18,14 @@
       inherit system;
 
       modules = [
-        ./configuration.nix
+        ./hosts/t480/configuration.nix
 
         home-manager.nixosModules.home-manager
-
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
 
-          home-manager.users.vova = import ./home.nix;
+          home-manager.users.vova = import ./home/vova.nix;
         }
       ];
     };

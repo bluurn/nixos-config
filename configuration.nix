@@ -7,9 +7,11 @@
 
   networking.hostName = "nixos"; # Define your hostname.
 
-    boot.loader.grub = {
-      enable = true;
-      devices = [ "/dev/nvme0n1" ];
-    };
   system.stateVersion = "25.11";
+
+  users.users.vova = {
+    isNormalUser = true;
+    home = "/home/vova";
+    extraGroups = [ "wheel" ];
+  };
 }
