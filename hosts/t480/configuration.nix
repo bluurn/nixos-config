@@ -13,6 +13,7 @@
   users.users.vova = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
+    shell = pkgs.zsh;
   };
 
   networking.networkmanager.enable = true;
