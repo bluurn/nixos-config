@@ -8,7 +8,17 @@
 
   home.stateVersion = "25.11";
 
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 
   programs.git = {
     enable = true;
