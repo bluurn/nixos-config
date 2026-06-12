@@ -21,5 +21,6 @@
     ripgrep
     fd
     fzf
+    lazygit
   ];
 }

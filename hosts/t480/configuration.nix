@@ -28,7 +28,7 @@
     git
     curl
     wget
-    lazygit
+    neovim
   ];
 
   programs.firefox.enable = true;
