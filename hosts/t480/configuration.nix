@@ -25,10 +25,10 @@
   programs.zsh.enable = true;
 
   environment.systemPackages = with pkgs; [
+    neovim
     git
     curl
     wget
-    neovim
   ];
 
   programs.firefox.enable = true;

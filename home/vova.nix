@@ -1,11 +1,11 @@
 { pkgs, ... }:
 
 {
+  imports = [
+    ./neovim.nix
+  ];
   home.username = "vova";
-
-  # либо вообще убери, либо оставь ТОЛЬКО тут
   home.homeDirectory = "/home/vova";
-
   home.stateVersion = "25.11";
 
   programs.zsh = {

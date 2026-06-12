@@ -28,6 +28,7 @@
           home-manager.users.vova = import ./home/vova.nix;
         }
       ];
+
     };
   };
 }

@@ -1,0 +1,31 @@
+{ pkgs, ... }:
+{
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    vimAlias = true;
+    viAlias = true;
+  };
+  home.packages = with pkgs; [
+    git
+    curl
+    unzip
+
+    ripgrep
+    fd
+
+    gcc
+    gnumake
+
+    nodejs
+
+    lua-language-server
+    stylua
+
+    nil
+    nixfmt-rfc-style
+
+    pyright
+    rust-analyzer
+  ]; 
+}
