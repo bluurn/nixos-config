@@ -46,5 +46,6 @@
     fd
     fzf
     lazygit
+    pass
   ];
 }
