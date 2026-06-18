@@ -4,6 +4,7 @@
   imports = [
     ./neovim.nix
   ];
+
   home.username = "vova";
   home.homeDirectory = "/home/vova";
   home.stateVersion = "25.11";
@@ -36,8 +37,20 @@
 
   programs.git = {
     enable = true;
-    userName = "vova";
-    userEmail = "vova@local";
+    settings.user = {
+      name = "Vladimir Suvorov";
+      email = "bluurn@gmail.com";
+    };
+  };
+
+  programs.gpg = {
+    enable = true;
+  };
+
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
+    pinentryPackage = pkgs.pinentry-curses;
   };
 
   home.packages = with pkgs; [
