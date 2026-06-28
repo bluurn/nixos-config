@@ -54,6 +54,7 @@
   };
 
   home.packages = with pkgs; [
+    direnv
     tree
     ripgrep
     fd
