@@ -47,14 +47,19 @@
     enable = true;
   };
 
+  programs.direnv = {
+    enable = true;
+  };
+
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    pinentryPackage = pkgs.pinentry-curses;
+    pinentry = {
+      package = pkgs.pinentry-curses;
+    };
   };
 
   home.packages = with pkgs; [
-    direnv
     tree
     ripgrep
     fd
