@@ -18,6 +18,10 @@
       inherit system;
 
       modules = [
+        ({ ... }: {
+          nixpkgs.config.allowUnfree = true;
+        })
+
         ./hosts/t480/configuration.nix
 
         home-manager.nixosModules.home-manager

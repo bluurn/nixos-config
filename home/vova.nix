@@ -4,7 +4,6 @@
   imports = [
     ./neovim.nix
   ];
-
   home.username = "vova";
   home.homeDirectory = "/home/vova";
   home.stateVersion = "25.11";
