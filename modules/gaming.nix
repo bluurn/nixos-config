@@ -15,6 +15,7 @@
 
   environment.systemPackages = with pkgs; [
     gamescope
+    proton-ge-bin
     libdecor
     mangohud
     mesa
