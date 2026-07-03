@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/gaming.nix
   ];
 
   users.users.vova = {
@@ -33,10 +34,6 @@
   programs.zsh.enable = true;
 
   programs.firefox.enable = true;
-
-  programs.steam = {
-    enable = true;
-  };
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
