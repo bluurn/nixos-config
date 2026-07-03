@@ -7,10 +7,11 @@
   hardware.graphics.enable = true;
 
   environment.systemPackages = with pkgs; [
+    gamescope
     mangohud
-    protonup-qt
     mesa-demos
-    vulkan-tools
     pciutils
+    protonup-qt
+    vulkan-tools
   ];
 }
