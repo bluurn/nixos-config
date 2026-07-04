@@ -15,7 +15,7 @@
     syntaxHighlighting.enable = true;
 
     shellAliases = {
-      n  = "nvim";
+      n = "nvim";
       ll = "ls -lah";
       la = "ls -A";
       gs = "git status";

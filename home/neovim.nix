@@ -27,7 +27,7 @@
 
     pyright
     rust-analyzer
-  ]; 
+  ];
 }
 # THEN RUN
 # git clone https://github.com/LazyVim/starter ~/.config/nvim
