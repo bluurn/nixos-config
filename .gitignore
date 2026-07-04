@@ -3,4 +3,9 @@ result-*
 .direnv
 .envrc
 *.swp
+*.swo
+*~
 
+.env
+.env.*
+!.env.example
