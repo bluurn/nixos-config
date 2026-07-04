@@ -10,4 +10,6 @@
   home.username = "vova";
   home.homeDirectory = "/home/vova";
   home.stateVersion = "25.11";
+
+  programs.home-manager.enable = true;
 }
