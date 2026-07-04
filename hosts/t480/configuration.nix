@@ -24,10 +24,11 @@
   services.desktopManager.gnome.enable = true;
 
   environment.systemPackages = with pkgs; [
+    curl
+    git
     localsend
     neovim
-    git
-    curl
+    pciutils
     wget
   ];
 

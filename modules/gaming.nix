@@ -1,29 +1,41 @@
-{ pkgs, ...}:
+{ pkgs, config, ...}:
 
 {
+  environment.systemPackages = with pkgs; [
+    gamemode
+    mangohud
+    protonup-qt
+    mangohud
+    mesa-demos
+    vulkan-tools
+  ];
+
   programs.steam.enable = true;
   programs.gamemode.enable = true;
-  
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      mesa
-      vulkan-loader
-      vulkan-validation-layers
-    ];
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = false;
+    nvidiaSettings = true;
+
+    powerManagement.enable = true;
+    powerManagement.finegrained = false;
+
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+    prime = {
+      offload.enable = true;
+      offload.enableOffloadCmd = true;
+
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
   };
 
-  environment.systemPackages = with pkgs; [
-    gamescope
-    proton-ge-bin
-    libdecor
-    mangohud
-    mesa
-    mesa-demos
-    pciutils
-    protonup-qt
-    vulkan-loader
-    vulkan-tools
-    xwayland
-  ];
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  hardware.opengl.enable = true;
 }
