@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ../../modules/gaming.nix
     ../../modules/development.nix
+    ../../modules/suspend.nix
   ];
 
   users.users.vova = {
