@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -9,7 +9,6 @@
     ../../modules/system.nix
     ../../modules/suspend.nix
   ];
-
 
   users.users.vova = {
     isNormalUser = true;
