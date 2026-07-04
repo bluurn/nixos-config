@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -7,6 +7,8 @@
     ../../modules/development.nix
     ../../modules/suspend.nix
   ];
+
+  boot.loader.systemd-boot.configurationLimit = lib.mkForce 5;
 
   users.users.vova = {
     isNormalUser = true;
