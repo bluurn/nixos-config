@@ -6,6 +6,7 @@
     fd
     fzf
     jq
+    just
     pass
     ripgrep
     tree
