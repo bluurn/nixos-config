@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/gaming.nix
+    ../../modules/desktop.nix
     ../../modules/development.nix
     ../../modules/suspend.nix
   ];
@@ -28,12 +29,6 @@
   networking.hostName = "t480";
 
   time.timeZone = "Europe/Berlin";
-
-  services.xserver.enable = true;
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
-
-  programs.firefox.enable = true;
 
   system.stateVersion = "25.11";
 }
