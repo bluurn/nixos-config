@@ -6,7 +6,7 @@
     ../../modules/system.nix
     ../../modules/users.nix
     ../../modules/fonts.nix
-    ../../modules/development.nix
+    ../../modules/packages.nix
     ../../modules/desktop.nix
     ../../modules/gaming.nix
     ../../modules/suspend.nix
