@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/gaming.nix
+    ../../modules/development.nix
   ];
 
   users.users.vova = {
@@ -23,22 +24,7 @@
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    curl
-    git
-    localsend
-    neovim
-    pciutils
-    wget
-  ];
-
-  programs.zsh.enable = true;
-
   programs.firefox.enable = true;
-
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-  ];
 
   system.stateVersion = "25.11";
 }
