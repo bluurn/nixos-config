@@ -4,9 +4,9 @@
   environment.systemPackages = with pkgs; [
     gamemode
     mangohud
-    protonup-qt
-    mangohud
     mesa-demos
+    pciutils
+    protonup-qt
     vulkan-tools
   ];
 
