@@ -5,9 +5,10 @@
     ./hardware-configuration.nix
     ../../modules/system.nix
     ../../modules/users.nix
-    ../../modules/gaming.nix
-    ../../modules/desktop.nix
+    ../../modules/fonts.nix
     ../../modules/development.nix
+    ../../modules/desktop.nix
+    ../../modules/gaming.nix
     ../../modules/suspend.nix
   ];
 
