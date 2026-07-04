@@ -1,4 +1,4 @@
-_: {
+{ lib, ... }: {
 
   boot.loader.systemd-boot.configurationLimit = lib.mkForce 5;
   nix.settings.experimental-features = [
