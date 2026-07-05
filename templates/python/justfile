@@ -14,7 +14,7 @@ typecheck:
     pyright
 
 test:
-    uv run pytest
+    uv run python -m unittest discover
 
 run file="main.py":
     uv run python {{file}}
