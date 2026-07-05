@@ -19,13 +19,13 @@ _:
       PLATFORM_PROFILE_ON_AC = "balanced";
       PLATFORM_PROFILE_ON_BAT = "low-power";
 
-      RUNTIME_PM_ON_AC = "auto";
+      RUNTIME_PM_ON_AC = "on";
       RUNTIME_PM_ON_BAT = "auto";
 
       WIFI_PWR_ON_AC = "off";
       WIFI_PWR_ON_BAT = "on";
 
-      USB_AUTOSUSPEND = 1;
+      USB_AUTOSUSPEND = 0;
 
       START_CHARGE_THRESH_BAT0 = 75;
       STOP_CHARGE_THRESH_BAT0 = 80;
