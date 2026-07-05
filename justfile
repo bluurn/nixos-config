@@ -31,3 +31,9 @@ nvidia:
 
 cmdline:
     cat /proc/cmdline
+
+install-hooks:
+    git config core.hooksPath .githooks
+
+hooks:
+    git config --get core.hooksPath
