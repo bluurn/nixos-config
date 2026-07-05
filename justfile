@@ -37,3 +37,26 @@ install-hooks:
 
 hooks:
     git config --get core.hooksPath
+power:
+    systemctl is-enabled power-profiles-daemon.service tlp.service 2>/dev/null || true
+    systemctl status tlp --no-pager
+    tlp-stat -s
+
+battery:
+    sudo tlp-stat -b
+
+cpu:
+    cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_driver
+    cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    cat /sys/devices/system/cpu/cpu0/cpufreq/energy_performance_preference 2>/dev/null || true
+
+sleep-info:
+    cat /sys/power/mem_sleep
+    cat /proc/cmdline | grep -o "i915.enable_[a-z]*=[0-9]" || true
+
+power-full:
+    just power
+    just battery
+    just cpu
+    just nvidia
+    just sleep-info
