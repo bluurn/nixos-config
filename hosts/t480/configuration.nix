@@ -10,6 +10,7 @@
     ../../modules/desktop.nix
     ../../modules/gaming.nix
     ../../modules/suspend.nix
+    ../../modules/power.nix
   ];
 
   system.stateVersion = "25.11";
