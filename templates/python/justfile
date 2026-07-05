@@ -1,0 +1,20 @@
+default:
+    just --list
+
+fmt:
+    ruff format .
+
+lint:
+    ruff check .
+
+lint-fix:
+    ruff check --fix .
+
+typecheck:
+    pyright
+
+test:
+    uv run pytest
+
+run file="main.py":
+    uv run python {{file}}

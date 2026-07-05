@@ -1,0 +1,17 @@
+default:
+    just --list
+
+fmt:
+    gofmt -w .
+
+test:
+    go test ./...
+
+vet:
+    go vet ./...
+
+lint:
+    golangci-lint run
+
+run:
+    go run .

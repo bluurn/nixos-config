@@ -1,0 +1,17 @@
+default:
+    just --list
+
+fmt:
+    prettier --write .
+
+check:
+    tsc --noEmit
+
+dev:
+    pnpm dev
+
+build:
+    pnpm build
+
+test:
+    pnpm test
