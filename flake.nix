@@ -27,7 +27,25 @@
     in
     {
       formatter.${system} = treefmtEval.config.build.wrapper;
+
       checks.${system}.formatting = treefmtEval.config.build.check self;
+
+      templates = {
+        go = {
+          path = ./templates/go;
+          description = "Go dev shell";
+        };
+
+        python = {
+          path = ./templates/python;
+          description = "Python dev shell";
+        };
+
+        node = {
+          path = ./templates/node;
+          description = "Node.js dev shell";
+        };
+      };
 
       nixosConfigurations.t480 = nixpkgs.lib.nixosSystem {
         inherit system;
