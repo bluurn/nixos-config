@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./gnome.nix
     ./neovim.nix
     ./shell.nix
     ./devtools.nix
