@@ -10,3 +10,12 @@ result-*
 .env
 .env.*
 !.env.example
+
+# project artifacts
+node_modules/
+.venv/
+.go/
+dist/
+coverage/
+__pycache__/
+*.pyc
