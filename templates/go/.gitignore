@@ -1,0 +1,39 @@
+# direnv / nix-direnv
+.direnv/
+
+# Nix build results
+result
+result-*
+
+# Go build artifacts
+/bin/
+/build/
+/dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go coverage / profiling
+coverage.out
+coverage.html
+*.coverprofile
+*.prof
+
+# Temporary files
+tmp/
+.temp/
+.cache/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
