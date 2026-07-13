@@ -10,6 +10,11 @@
     };
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
+
+    dedup = {
+      url = "github:bluurn/dedup";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

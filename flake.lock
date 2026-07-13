@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "dedup": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1783945994,
+        "narHash": "sha256-4v5oxMYgbcKt449D/HsDdgy8Qb+j3csYlX1ILkb6sEI=",
+        "owner": "bluurn",
+        "repo": "dedup",
+        "rev": "b51b9d86919cb15db06ae6428a08fdcf58bace05",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bluurn",
+        "repo": "dedup",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -55,6 +75,7 @@
     },
     "root": {
       "inputs": {
+        "dedup": "dedup",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "treefmt-nix": "treefmt-nix"

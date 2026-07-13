@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     bat
+    dedup # <3
     eza
     fd
     fzf
