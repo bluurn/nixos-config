@@ -15,6 +15,11 @@
       url = "github:bluurn/dedup";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    port-scanner = {
+      url = "github:bluurn/port_scanner";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
