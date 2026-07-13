@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783945994,
-        "narHash": "sha256-4v5oxMYgbcKt449D/HsDdgy8Qb+j3csYlX1ILkb6sEI=",
+        "lastModified": 1783953282,
+        "narHash": "sha256-CrIQPpCbiCV+t1jxLRLD+232+sMs6MUv+jpvNWWqWlU=",
         "owner": "bluurn",
         "repo": "dedup",
-        "rev": "b51b9d86919cb15db06ae6428a08fdcf58bace05",
+        "rev": "677e00425222848b516d79e9dd9ce7e812e3637e",
         "type": "github"
       },
       "original": {
