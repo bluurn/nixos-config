@@ -1,8 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   home.packages = with pkgs; [
     bat
-    dedup # <3
     eza
     fd
     fzf
@@ -14,5 +13,7 @@
     wget
     wl-clipboard
     zoxide
+
+    inputs.dedup.packages.${pkgs.system}.default # <3
   ];
 }
