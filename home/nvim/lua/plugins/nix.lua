@@ -35,6 +35,15 @@ return {
           mason = false,
           cmd = { profile_bin .. "vscode-json-language-server", "--stdio" },
         },
+        ruff = {
+          mason = false,
+          cmd = { profile_bin .. "ruff", "server" },
+        },
+
+        pyright = {
+          mason = false,
+          cmd = { profile_bin .. "pyright-langserver", "--stdio" },
+        },
       },
     },
   },
