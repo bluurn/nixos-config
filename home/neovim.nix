@@ -47,6 +47,15 @@
     gopls
     delve
     golangci-lint
+    # Markdown
+    marksman
+    markdownlint-cli2
+
+    # JSON / JS / TS
+    vscode-langservers-extracted
+    vtsls
+    typescript
+    prettier
   ];
 
   xdg.configFile."nvim" = {
