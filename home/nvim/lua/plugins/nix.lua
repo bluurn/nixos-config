@@ -5,6 +5,16 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        vtsls = {
+          mason = false,
+          cmd = { profile_bin .. "vtsls", "--stdio" },
+          filetypes = {
+            "javascript",
+            "javascriptreact",
+            "typescript",
+            "typescriptreact",
+          },
+        },
         lua_ls = {
           mason = false,
           cmd = { profile_bin .. "lua-language-server" },
@@ -26,10 +36,17 @@ return {
         gopls = {
           mason = false,
           cmd = { profile_bin .. "gopls" },
+          filetypes = {
+            "go",
+            "gomod",
+          },
         },
         marksman = {
           mason = false,
           cmd = { profile_bin .. "marksman" },
+          filetypes = {
+            "markdown",
+          },
         },
         jsonls = {
           mason = false,
