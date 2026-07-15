@@ -4,7 +4,6 @@
     bat
     eza
     fd
-    fzf
     jq
     just
     pass
