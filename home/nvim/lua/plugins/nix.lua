@@ -42,4 +42,14 @@ return {
       },
     },
   },
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      formatters = {
+        stylua = {
+          command = profile_bin .. "stylua",
+        },
+      },
+    },
+  },
 }
