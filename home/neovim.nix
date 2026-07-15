@@ -44,6 +44,7 @@
     rust-analyzer
 
     # Go
+    go
     delve
     gofumpt
     golangci-lint
