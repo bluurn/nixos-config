@@ -34,6 +34,7 @@
     # Nix
     nil
     nixfmt-rfc-style
+    statix
 
     # Python
     pyright
