@@ -44,9 +44,13 @@
     rust-analyzer
 
     # Go
-    gopls
     delve
+    gofumpt
     golangci-lint
+    gopls
+    gotools
+
+    shfmt
     # Markdown
     marksman
     markdownlint-cli2

@@ -19,22 +19,18 @@ return {
             },
           },
         },
-
         nil_ls = {
           mason = false,
           cmd = { profile_bin .. "nil" },
         },
-
         gopls = {
           mason = false,
           cmd = { profile_bin .. "gopls" },
         },
-
         marksman = {
           mason = false,
           cmd = { profile_bin .. "marksman" },
         },
-
         jsonls = {
           mason = false,
           cmd = { profile_bin .. "vscode-json-language-server", "--stdio" },
@@ -48,6 +44,15 @@ return {
       formatters = {
         stylua = {
           command = profile_bin .. "stylua",
+        },
+        gofumpt = {
+          command = profile_bin .. "gofumpt",
+        },
+        goimports = {
+          command = profile_bin .. "goimports",
+        },
+        shfmt = {
+          command = profile_bin .. "shfmt",
         },
       },
     },
