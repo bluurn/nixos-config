@@ -48,10 +48,6 @@ return {
             "markdown",
           },
         },
-        jsonls = {
-          mason = false,
-          cmd = { profile_bin .. "vscode-json-language-server", "--stdio" },
-        },
         ruff = {
           mason = false,
           cmd = { profile_bin .. "ruff", "server" },

@@ -57,7 +57,6 @@
     markdownlint-cli2
 
     # JSON / JS / TS
-    vscode-langservers-extracted
     vtsls
     typescript
     prettier
