@@ -11,6 +11,7 @@
     ../../modules/gaming.nix
     ../../modules/suspend.nix
     ../../modules/power.nix
+    ../../modules/vpn.nix
   ];
 
   system.stateVersion = "25.11";

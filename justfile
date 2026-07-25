@@ -60,3 +60,7 @@ power-full:
     just cpu
     just nvidia
     just sleep-info
+
+vpn:
+    systemctl status mullvad-daemon --no-pager
+    mullvad status
