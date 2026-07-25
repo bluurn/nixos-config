@@ -64,3 +64,7 @@ power-full:
 vpn:
     systemctl status mullvad-daemon --no-pager
     mullvad status
+
+vpn-apply secret="Personal/Mullvad":
+    mullvad account login "$(pass show "{{secret}}" | head -n1)"
+    mullvad connect
