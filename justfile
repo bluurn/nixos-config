@@ -79,3 +79,9 @@ torrent-open:
 
 torrent-add target:
     qb-add "{{target}}"
+
+torrent-apply:
+    qbittorrent-apply-settings
+
+torrent-test:
+    qb-add ~/Downloads/test.torrent
