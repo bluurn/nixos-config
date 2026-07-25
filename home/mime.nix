@@ -1,4 +1,4 @@
-_: {
+{
   xdg.mimeApps = {
     enable = true;
 
@@ -7,4 +7,6 @@ _: {
       "application/x-bittorrent" = [ "org.qbittorrent.qBittorrent.desktop" ];
     };
   };
+
+  xdg.configFile."mimeapps.list".force = true;
 }
