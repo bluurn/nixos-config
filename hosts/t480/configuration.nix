@@ -12,6 +12,7 @@
     ../../modules/suspend.nix
     ../../modules/power.nix
     ../../modules/vpn.nix
+    ../../modules/torrent.nix
   ];
 
   system.stateVersion = "25.11";

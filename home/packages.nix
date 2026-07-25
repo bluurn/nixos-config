@@ -7,7 +7,6 @@
     jq
     just
     pass
-    qbittorrent
     ripgrep
     telegram-desktop
     tree

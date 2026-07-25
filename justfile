@@ -68,3 +68,14 @@ vpn:
 vpn-apply secret="Personal/Mullvad":
     mullvad account login "$(pass show "{{secret}}" | head -n1)"
     mullvad connect
+
+torrent:
+    systemctl status qbittorrent --no-pager
+    ss -ltnp | grep 8080 || true
+    mullvad status
+
+torrent-open:
+    xdg-open http://127.0.0.1:8080
+
+torrent-add target:
+    qb-add "{{target}}"
