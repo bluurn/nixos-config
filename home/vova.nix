@@ -8,6 +8,7 @@
     ./devtools.nix
     ./packages.nix
     ./services.nix
+    ./mime.nix
   ];
 
   home = {
