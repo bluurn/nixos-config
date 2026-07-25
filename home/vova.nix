@@ -7,6 +7,7 @@
     ./shell.nix
     ./devtools.nix
     ./packages.nix
+    ./services.nix
   ];
 
   home = {
