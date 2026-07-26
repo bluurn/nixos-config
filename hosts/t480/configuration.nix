@@ -13,6 +13,7 @@
     ../../modules/power.nix
     ../../modules/vpn.nix
     ../../modules/torrent.nix
+    ../../modules/media-share.nix
   ];
 
   system.stateVersion = "25.11";
