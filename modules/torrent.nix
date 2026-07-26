@@ -389,16 +389,10 @@ in
     ruleset = ''
       table inet qbit_killswitch {
         chain output {
-          type filter hook output priority filter; policy accept;
-
-          # qBittorrent Web UI / local API
-          meta skuid ${toString qbitUid} oifname "lo" accept
-
-          # Torrent traffic through Mullvad only
-          meta skuid ${toString qbitUid} oifname "wg0-mullvad" accept
-
-          # Anything else from qBittorrent is forbidden
-          meta skuid ${toString qbitUid} reject with icmpx type admin-prohibited
+          # qBittorrent may only use localhost and Mullvad.
+          # Do not "accept" good traffic here; Mullvad's own nftables chain
+          # still needs to process it. Only reject bad interfaces.
+          meta skuid ${toString qbitUid} oifname != { "lo", "wg0-mullvad" } counter reject with icmpx type admin-prohibited
         }
       }
     '';
