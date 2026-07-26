@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
 let
+  qbitUid = 991;
   qbitBaseUrl = "http://127.0.0.1:8080";
   qbitPasswordPath = "Services/qbittorrent/webui";
 
@@ -344,6 +345,7 @@ in
 
     users.qbittorrent = {
       isSystemUser = true;
+      uid = qbitUid;
       group = "qbittorrent";
     };
 
@@ -390,13 +392,13 @@ in
           type filter hook output priority filter; policy accept;
 
           # qBittorrent Web UI / local API
-          meta skuid "qbittorrent" oifname "lo" accept
+          meta skuid ${toString qbitUid} oifname "lo" accept
 
           # Torrent traffic through Mullvad only
-          meta skuid "qbittorrent" oifname "wg0-mullvad" accept
+          meta skuid ${toString qbitUid} oifname "wg0-mullvad" accept
 
           # Anything else from qBittorrent is forbidden
-          meta skuid "qbittorrent" reject with icmpx type admin-prohibited
+          meta skuid ${toString qbitUid} reject with icmpx type admin-prohibited
         }
       }
     '';
