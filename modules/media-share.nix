@@ -33,7 +33,7 @@ in
         "security" = "user";
         "map to guest" = "bad user";
 
-        "interfaces" = "lo wlp3s0";
+        "interfaces" = "lo 192.168.1.0/24";
         "bind interfaces only" = "yes";
 
         "server min protocol" = "SMB2_10";
@@ -53,6 +53,7 @@ in
   services.samba-wsdd = {
     enable = true;
     openFirewall = false;
+    interface = "wlp3s0";
   };
 
   networking.firewall.interfaces = {
