@@ -89,6 +89,11 @@ torrent-test:
 torrent-check:
     torrent-check
 
+torrent-recover:
+    mullvad connect
+    sleep 5
+    just torrent-check || (just torrent-apply && just torrent-check)
+
 browser-check:
     xdg-mime query default x-scheme-handler/http
     xdg-mime query default x-scheme-handler/https
