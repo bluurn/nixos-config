@@ -85,3 +85,11 @@ torrent-apply:
 
 torrent-test:
     qb-add ~/Downloads/test.torrent
+
+torrent-check:
+    torrent-check
+
+browser-check:
+    xdg-mime query default x-scheme-handler/http
+    xdg-mime query default x-scheme-handler/https
+    xdg-settings get default-web-browser || true

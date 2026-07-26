@@ -1,3 +1,6 @@
+let
+  browser = "firefox.desktop";
+in
 {
   xdg = {
     desktopEntries.qbittorrent-web = {
@@ -26,6 +29,16 @@
       enable = true;
 
       defaultApplications = {
+        "x-scheme-handler/http" = [ browser ];
+        "x-scheme-handler/https" = [ browser ];
+        "text/html" = [ browser ];
+        "application/xhtml+xml" = [ browser ];
+        "application/x-extension-htm" = [ browser ];
+        "application/x-extension-html" = [ browser ];
+        "application/x-extension-shtml" = [ browser ];
+        "application/x-extension-xhtml" = [ browser ];
+        "application/x-extension-xht" = [ browser ];
+
         "x-scheme-handler/magnet" = [ "qbittorrent-add.desktop" ];
         "application/x-bittorrent" = [ "qbittorrent-add.desktop" ];
       };

@@ -183,6 +183,143 @@ let
       echo "Bound to interface: $iface"
     '';
   };
+  torrentCheck = pkgs.writeShellApplication {
+    name = "torrent-check";
+
+    runtimeInputs = with pkgs; [
+      coreutils
+      curl
+      gnugrep
+      gnused
+      iproute2
+      jq
+      mullvad-vpn
+      pass
+    ];
+
+    text = ''
+      set -euo pipefail
+
+      base_url="http://127.0.0.1:8080"
+      password_path="Services/qbittorrent/webui"
+
+      fail() {
+        echo "FAIL: $*" >&2
+        exit 1
+      }
+
+      warn() {
+        echo "WARN: $*" >&2
+      }
+
+      ok() {
+        echo "OK: $*"
+      }
+
+      mullvad status | grep -qi "connected" \
+        || fail "Mullvad is not connected"
+
+      ok "Mullvad is connected"
+
+      connected="$(
+        curl -fsS https://am.i.mullvad.net/connected || true
+      )"
+
+      echo "$connected" | grep -qi "connected to Mullvad" \
+        || fail "HTTP traffic is not using Mullvad: $connected"
+
+      vpn_ip="$(
+        curl -fsS https://am.i.mullvad.net/json | jq -r '.ip // empty'
+      )"
+
+      if [ -n "$vpn_ip" ]; then
+        ok "Mullvad exit IP: $vpn_ip"
+      fi
+
+      listen="$(
+        ss -ltnp | grep ':8080' || true
+      )"
+
+      [ -n "$listen" ] \
+        || fail "Nothing listens on port 8080"
+
+      echo "$listen" | grep -q '127\.0\.0\.1:8080' \
+        || fail "qBittorrent Web UI is not bound to 127.0.0.1: $listen"
+
+      if echo "$listen" | grep -Eq '0\.0\.0\.0:8080|\[::\]:8080'; then
+        fail "qBittorrent Web UI is listening publicly: $listen"
+      fi
+
+      ok "qBittorrent Web UI listens on localhost only"
+
+      iface="$(
+        ip route get 1.1.1.1 \
+          | sed -n 's/.* dev \([^ ]*\).*/\1/p' \
+          | head -n1
+      )"
+
+      [ -n "$iface" ] \
+        || fail "Could not detect active route interface"
+
+      cookie="$(mktemp)"
+      trap 'rm -f "$cookie"' EXIT
+
+      password="$(pass show "$password_path" | head -n1)"
+
+      login_result="$(
+        curl -fsS \
+          -c "$cookie" \
+          -b "$cookie" \
+          --data-urlencode "username=admin" \
+          --data-urlencode "password=$password" \
+          "$base_url/api/v2/auth/login"
+      )"
+
+      [ "$login_result" = "Ok." ] \
+        || fail "qBittorrent API login failed: $login_result"
+
+      prefs="$(
+        curl -fsS \
+          -b "$cookie" \
+          "$base_url/api/v2/app/preferences"
+      )"
+
+      q_iface="$(printf '%s' "$prefs" | jq -r '.current_network_interface // ""')"
+      web_addr="$(printf '%s' "$prefs" | jq -r '.web_ui_address // ""')"
+
+      [ "$web_addr" = "127.0.0.1" ] \
+        || fail "qBittorrent web_ui_address is '$web_addr', expected 127.0.0.1"
+
+      [ -n "$q_iface" ] \
+        || fail "qBittorrent current_network_interface is empty"
+
+      if [ "$q_iface" != "$iface" ]; then
+        warn "qBittorrent interface '$q_iface' differs from current route interface '$iface'"
+      else
+        ok "qBittorrent is bound to active Mullvad interface: $q_iface"
+      fi
+
+      for key in web_ui_upnp bypass_local_auth upnp dht pex lsd; do
+        value="$(printf '%s' "$prefs" | jq -r ".\"$key\"")"
+
+        [ "$value" = "false" ] \
+          || fail "qBittorrent preference '$key' is '$value', expected false"
+
+        ok "$key = false"
+      done
+
+      anonymous_mode="$(printf '%s' "$prefs" | jq -r '.anonymous_mode')"
+
+      [ "$anonymous_mode" = "true" ] \
+        || fail "anonymous_mode is '$anonymous_mode', expected true"
+
+      ok "anonymous_mode = true"
+
+      echo
+      echo "Torrent safety check passed."
+      echo "Still do a real tracker test with IPLeak once after major changes."
+    '';
+  };
 in
 {
   users = {
@@ -230,5 +367,6 @@ in
   environment.systemPackages = [
     qbAdd
     qbittorrentApplySettings
+    torrentCheck
   ];
 }
