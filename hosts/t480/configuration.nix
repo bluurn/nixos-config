@@ -14,6 +14,7 @@
     ../../modules/vpn.nix
     ../../modules/torrent.nix
     ../../modules/media-share.nix
+    ../../modules/torrent-web.nix
   ];
 
   system.stateVersion = "25.11";
