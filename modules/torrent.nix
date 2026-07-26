@@ -96,6 +96,7 @@ let
       gnugrep
       gnused
       iproute2
+      jq
       mullvad-vpn
       pass
     ];
@@ -106,11 +107,30 @@ let
       base_url="${qbitBaseUrl}"
       password_path="${qbitPasswordPath}"
 
-      if ! mullvad status | grep -qi "connected"; then
-        echo "Mullvad is not connected; refusing to configure qBittorrent"
-        mullvad status || true
+      fail() {
+        echo "FAIL: $*" >&2
         exit 1
-      fi
+      }
+
+      mullvad_status="$(mullvad status || true)"
+
+      printf '%s\n' "$mullvad_status" | grep -Eiq '^Connected\b' \
+        || fail "Mullvad is not connected; refusing to configure qBittorrent: $mullvad_status"
+
+      mullvad_json="$(
+        curl -fsS https://am.i.mullvad.net/json
+      )" || fail "Could not query Mullvad IP check endpoint"
+
+      is_mullvad_exit="$(
+        printf '%s' "$mullvad_json" | jq -r '.mullvad_exit_ip // false'
+      )"
+
+      current_ip="$(
+        printf '%s' "$mullvad_json" | jq -r '.ip // empty'
+      )"
+
+      [ "$is_mullvad_exit" = "true" ] \
+        || fail "Current external IP is not a Mullvad exit IP: $current_ip"
 
       iface="$(
         ip route get 1.1.1.1 \
@@ -118,10 +138,8 @@ let
           | head -n1
       )"
 
-      if [ -z "$iface" ]; then
-        echo "Could not detect active Mullvad network interface"
-        exit 1
-      fi
+      [ -n "$iface" ] \
+        || fail "Could not detect active Mullvad network interface"
 
       for _ in $(seq 1 30); do
         if curl -fsS "$base_url" >/dev/null 2>&1; then
@@ -145,10 +163,8 @@ let
           "$base_url/api/v2/auth/login"
       )"
 
-      if [ "$login_result" != "Ok." ]; then
-        echo "qBittorrent login failed: $login_result"
-        exit 1
-      fi
+      [ "$login_result" = "Ok." ] \
+        || fail "qBittorrent login failed: $login_result"
 
       prefs="$(
         cat <<JSON
@@ -181,8 +197,10 @@ let
 
       echo "qBittorrent safe settings applied"
       echo "Bound to interface: $iface"
+      echo "Mullvad exit IP: $current_ip"
     '';
   };
+
   torrentCheck = pkgs.writeShellApplication {
     name = "torrent-check";
 
@@ -200,41 +218,41 @@ let
     text = ''
       set -euo pipefail
 
-      base_url="http://127.0.0.1:8080"
-      password_path="Services/qbittorrent/webui"
+      base_url="${qbitBaseUrl}"
+      password_path="${qbitPasswordPath}"
 
       fail() {
         echo "FAIL: $*" >&2
         exit 1
       }
 
-      warn() {
-        echo "WARN: $*" >&2
-      }
-
       ok() {
         echo "OK: $*"
       }
 
-      mullvad status | grep -qi "connected" \
-        || fail "Mullvad is not connected"
+      mullvad_status="$(mullvad status || true)"
 
-      ok "Mullvad is connected"
+      printf '%s\n' "$mullvad_status" | grep -Eiq '^Connected\b' \
+        || fail "Mullvad CLI says VPN is not connected: $mullvad_status"
 
-      connected="$(
-        curl -fsS https://am.i.mullvad.net/connected || true
+      ok "Mullvad CLI reports connected"
+
+      mullvad_json="$(
+        curl -fsS https://am.i.mullvad.net/json
+      )" || fail "Could not query Mullvad IP check endpoint"
+
+      is_mullvad_exit="$(
+        printf '%s' "$mullvad_json" | jq -r '.mullvad_exit_ip // false'
       )"
 
-      echo "$connected" | grep -qi "connected to Mullvad" \
-        || fail "HTTP traffic is not using Mullvad: $connected"
-
-      vpn_ip="$(
-        curl -fsS https://am.i.mullvad.net/json | jq -r '.ip // empty'
+      current_ip="$(
+        printf '%s' "$mullvad_json" | jq -r '.ip // empty'
       )"
 
-      if [ -n "$vpn_ip" ]; then
-        ok "Mullvad exit IP: $vpn_ip"
-      fi
+      [ "$is_mullvad_exit" = "true" ] \
+        || fail "Current external IP is not a Mullvad exit IP: $current_ip"
+
+      ok "Mullvad exit IP: $current_ip"
 
       listen="$(
         ss -ltnp | grep ':8080' || true
@@ -293,11 +311,10 @@ let
       [ -n "$q_iface" ] \
         || fail "qBittorrent current_network_interface is empty"
 
-      if [ "$q_iface" != "$iface" ]; then
-        warn "qBittorrent interface '$q_iface' differs from current route interface '$iface'"
-      else
-        ok "qBittorrent is bound to active Mullvad interface: $q_iface"
-      fi
+      [ "$q_iface" = "$iface" ] \
+        || fail "qBittorrent interface '$q_iface' differs from current route interface '$iface'"
+
+      ok "qBittorrent is bound to active Mullvad interface: $q_iface"
 
       for key in web_ui_upnp bypass_local_auth upnp dht pex lsd; do
         value="$(printf '%s' "$prefs" | jq -r ".\"$key\"")"
