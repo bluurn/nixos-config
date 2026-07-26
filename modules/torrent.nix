@@ -381,6 +381,26 @@ in
     };
   };
 
+  networking.nftables = {
+    enable = true;
+
+    ruleset = ''
+      table inet qbit_killswitch {
+        chain output {
+          type filter hook output priority filter; policy accept;
+
+          # qBittorrent Web UI / local API
+          meta skuid "qbittorrent" oifname "lo" accept
+
+          # Torrent traffic through Mullvad only
+          meta skuid "qbittorrent" oifname "wg0-mullvad" accept
+
+          # Anything else from qBittorrent is forbidden
+          meta skuid "qbittorrent" reject with icmpx type admin-prohibited
+        }
+      }
+    '';
+  };
   environment.systemPackages = [
     qbAdd
     qbittorrentApplySettings
