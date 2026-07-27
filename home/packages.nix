@@ -6,6 +6,7 @@
     fd
     jq
     just
+    lf
     pass
     ripgrep
     telegram-desktop
