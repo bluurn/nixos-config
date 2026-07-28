@@ -32,6 +32,9 @@ Only put host-specific composition in `hosts/t480/`.
   requested.
 - Document project decisions, alternatives, reasoning, and operational consequences in
   `docs/nixos-t480-field-notes.md`.
+- Update `README.md` whenever a crucial change affects user-facing features, setup, activation,
+  migration, validation, or next steps. Do not leave required handoff commands only in the final
+  response.
 - Summarize each material change and its operational effect when handing work back.
 
 ## Validation

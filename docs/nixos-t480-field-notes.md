@@ -1043,6 +1043,8 @@ The most reusable lessons:
 8. Do not add services just because they are interesting.
 9. Stop tuning when the system is stable enough.
 10. Document the “why”, not only the “what”.
+11. Put user-facing setup, activation, migration, validation, and next steps in README.md when a
+    crucial change introduces them.
 ```
 
 ## 32. Universal Debug Checklist
