@@ -98,3 +98,12 @@ browser-check:
     xdg-mime query default x-scheme-handler/http
     xdg-mime query default x-scheme-handler/https
     xdg-settings get default-web-browser || true
+
+applypilot-install:
+    applypilot-install
+
+applypilot-doctor:
+    applypilot doctor
+
+applypilot-dry-run:
+    applypilot apply --dry-run

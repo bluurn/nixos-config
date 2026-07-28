@@ -1163,3 +1163,100 @@ Final takeaway:
 The system is useful because it is understandable.
 Keep it small, documented, and testable.
 ```
+
+## 35. ApplyPilot Integration
+
+### Context
+
+ApplyPilot is an AGPL-licensed Python application that discovers jobs, scores matches, generates
+application material, and can drive Chromium to submit applications.
+
+Upstream installation is not a normal single-package Python install:
+
+```text
+ApplyPilot requires Python 3.11 or newer.
+Auto-apply requires Node.js, Chromium, and Claude Code.
+python-jobspy is installed separately with --no-deps because of its NumPy metadata constraint.
+The Playwright MCP server may be fetched by npx at runtime.
+```
+
+Installing those Python packages globally would introduce mutable state into the declarative user
+environment. Installing them during Home Manager activation would make system rebuilds depend on
+PyPI availability and could leave a partially updated environment.
+
+### Decision
+
+Home Manager provides two declarative launchers from `home/applypilot.nix`:
+
+```text
+applypilot-install
+  creates a private uv environment
+  pins ApplyPilot to version 0.3.0
+  applies the upstream python-jobspy resolver workaround
+
+applypilot
+  refuses to run when the expected version is absent
+  adds Nix-managed Node.js, Chromium, and Claude Code to PATH
+  points browser-related environment variables at Nix Chromium
+  delegates to the private environment
+```
+
+Mutable application files are separated by purpose:
+
+```text
+~/.local/share/applypilot
+  private Python environment and installed-version marker
+
+~/.applypilot
+  profile, searches, database, generated application material, and .env secrets
+```
+
+The environment is installed explicitly after a system switch:
+
+```bash
+just applypilot-install
+applypilot init
+applypilot doctor
+```
+
+Re-running `applypilot-install` replaces only the private Python environment. It does not remove
+the user profile or generated application data in `~/.applypilot`.
+
+### Consequences
+
+Positive outcomes:
+
+```text
+Python packages do not pollute the system or Home Manager package set.
+Nix owns the native runtime dependencies.
+The ApplyPilot version is intentional and visible in Git.
+System rebuilds remain independent from PyPI.
+Application data and secrets stay outside the repository.
+The resolver workaround is reproducible and documented.
+```
+
+Tradeoffs:
+
+```text
+The first install and future reinstalls require network access to PyPI.
+python-jobspy remains a separately resolved upstream dependency.
+npx may access the network when the auto-apply Playwright MCP server starts.
+The private environment is isolated but is not itself a pure Nix derivation.
+Upgrading ApplyPilot requires changing the pinned version and validating the workflow again.
+```
+
+### Safety Workflow
+
+ApplyPilot can submit forms to third parties, so automatic submission should not be the first
+test:
+
+```bash
+applypilot doctor
+applypilot run --dry-run
+applypilot apply --dry-run
+```
+
+Review the profile, screening-answer defaults, generated resume, and generated cover letter before
+running `applypilot apply` without `--dry-run`. CAPTCHA-solving services are intentionally not
+configured declaratively; adding one would require a separate privacy and credential-handling
+decision.

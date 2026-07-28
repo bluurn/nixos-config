@@ -15,6 +15,7 @@ sharing are all managed through Nix.
 - ThinkPad-oriented power and suspend configuration
 - Mullvad-bound qBittorrent service with safety checks
 - Local SMB media sharing and a Caddy-powered web interface
+- Isolated ApplyPilot job-search automation environment
 - Reproducible Go, Python, and Node.js project templates
 - Formatting, static analysis, Git hooks, and CI checks
 
@@ -91,9 +92,32 @@ just nvidia
 just vpn
 just torrent-check
 just browser-check
+just applypilot-doctor
 ```
 
 Run `just --list` for the complete command set.
+
+## ApplyPilot
+
+ApplyPilot runs from a private, versioned Python environment rather than the global system
+environment. After activating the NixOS configuration, install the pinned Python application:
+
+```shell
+just applypilot-install
+applypilot init
+applypilot doctor
+```
+
+Its profile, searches, generated documents, and API configuration live in `~/.applypilot`.
+ApplyPilot supports Gemini, OpenAI, and local OpenAI-compatible models. Keep API keys in
+`~/.applypilot/.env`, which is outside this repository.
+
+Before allowing automatic submission, inspect the generated material and exercise the browser
+workflow without submitting:
+
+```shell
+just applypilot-dry-run
+```
 
 ## Maintenance
 

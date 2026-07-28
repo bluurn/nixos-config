@@ -30,6 +30,8 @@ Only put host-specific composition in `hosts/t480/`.
   data. Use `pass` or ignored `.env` files for runtime secrets.
 - Do not run `nixos-rebuild switch`, update the lock file, commit, or push unless explicitly
   requested.
+- Document project decisions, alternatives, reasoning, and operational consequences in
+  `docs/nixos-t480-field-notes.md`.
 - Summarize each material change and its operational effect when handing work back.
 
 ## Validation

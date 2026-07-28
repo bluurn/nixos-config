@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./applypilot.nix
     ./gnome.nix
     ./neovim.nix
     ./shell.nix
