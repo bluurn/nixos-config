@@ -27,6 +27,8 @@ let
       uv pip install \
         --python "$venv/bin/python" \
         "applypilot==${applyPilotVersion}" \
+        numpy \
+        pandas \
         pydantic \
         tls-client \
         requests \
