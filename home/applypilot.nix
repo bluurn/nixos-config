@@ -76,6 +76,13 @@ let
         exit 1
       fi
 
+      export LD_LIBRARY_PATH="${
+        pkgs.lib.makeLibraryPath [
+          pkgs.stdenv.cc.cc.lib
+          pkgs.zlib
+        ]
+      }:''${LD_LIBRARY_PATH:-}"
+
       export CHROME_PATH="${pkgs.chromium}/bin/chromium"
       export PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH="${pkgs.chromium}/bin/chromium"
 
