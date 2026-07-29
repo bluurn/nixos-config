@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "applypilot": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785344058,
+        "narHash": "sha256-02s5CQ1oZAcHQdbyyUIurYvIbSYgIhqdZ4WArrzknO0=",
+        "ref": "refs/heads/feat/eu-search-profile",
+        "rev": "6bda7f0b03017b532deb5124787b07994c1f49cd",
+        "revCount": 64,
+        "type": "git",
+        "url": "https://github.com/bluurn/ApplyPilot.git"
+      },
+      "original": {
+        "ref": "refs/heads/feat/eu-search-profile",
+        "type": "git",
+        "url": "https://github.com/bluurn/ApplyPilot.git"
+      }
+    },
     "codex-cli-nix": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -149,6 +170,7 @@
     },
     "root": {
       "inputs": {
+        "applypilot": "applypilot",
         "codex-cli-nix": "codex-cli-nix",
         "dedup": "dedup",
         "home-manager": "home-manager",

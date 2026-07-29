@@ -15,7 +15,7 @@ sharing are all managed through Nix.
 - ThinkPad-oriented power and suspend configuration
 - Mullvad-bound qBittorrent service with safety checks
 - Local SMB media sharing and a Caddy-powered web interface
-- Isolated ApplyPilot job-search automation environment
+- Declaratively packaged ApplyPilot job-search automation
 - Reproducible Go, Python, and Node.js project templates
 - Formatting, static analysis, Git hooks, and CI checks
 
@@ -99,12 +99,12 @@ Run `just --list` for the complete command set.
 
 ## ApplyPilot
 
-ApplyPilot runs from a private, versioned Python environment rather than the global system
-environment. After activating the NixOS configuration, install the pinned Python application:
+ApplyPilot is installed directly from the pinned `bluurn/ApplyPilot` flake by Home Manager.
+After activating the NixOS configuration, it is available from any directory without an
+installer or environment prefix:
 
 ```shell
-just applypilot-install
-applypilot init
+applypilot today
 applypilot doctor
 ```
 

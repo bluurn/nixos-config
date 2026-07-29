@@ -1188,63 +1188,59 @@ PyPI availability and could leave a partially updated environment.
 
 ### Decision
 
-Home Manager provides two declarative launchers from `home/applypilot.nix`:
+The maintained `bluurn/ApplyPilot` fork exports a complete Nix package. The NixOS flake pins that
+repository as an input, and `home/applypilot.nix` installs its default package alongside Claude
+Code:
 
 ```text
-applypilot-install
-  creates a private uv environment
-  pins ApplyPilot to version 0.3.0
-  applies the upstream python-jobspy resolver workaround
+ApplyPilot flake package
+  builds the maintained fork rather than upstream PyPI 0.3.0
+  includes the Python application and python-jobspy
+  adds Nix-managed Node.js and Chromium to the launcher PATH
+  points Playwright browser variables at Nix-managed paths
 
-applypilot
-  refuses to run when the expected version is absent
-  adds Nix-managed Node.js, Chromium, and Claude Code to PATH
-  points browser-related environment variables at Nix Chromium
-  delegates to the private environment
+Home Manager
+  exposes applypilot directly on the user PATH
+  installs Claude Code for the optional auto-apply workflow
 ```
 
 Mutable application files are separated by purpose:
 
 ```text
-~/.local/share/applypilot
-  private Python environment and installed-version marker
-
 ~/.applypilot
   profile, searches, database, generated application material, and .env secrets
 ```
 
-The environment is installed explicitly after a system switch:
+No post-switch installer is required:
 
 ```bash
-just applypilot-install
-applypilot init
+applypilot --version
+applypilot today
 applypilot doctor
 ```
 
-Re-running `applypilot-install` replaces only the private Python environment. It does not remove
-the user profile or generated application data in `~/.applypilot`.
+System rebuilds replace only the immutable package. They do not remove the user profile or
+generated application data in `~/.applypilot`.
 
 ### Consequences
 
 Positive outcomes:
 
 ```text
-Python packages do not pollute the system or Home Manager package set.
-Nix owns the native runtime dependencies.
-The ApplyPilot version is intentional and visible in Git.
-System rebuilds remain independent from PyPI.
+Python packages do not pollute a mutable global or private environment.
+Nix owns both Python and native runtime dependencies.
+The maintained fork revision is pinned in `flake.lock`.
+System rebuilds remain independent from PyPI and do not require an install step.
 Application data and secrets stay outside the repository.
-The resolver workaround is reproducible and documented.
+The python-jobspy dependency is provided by nixpkgs.
 ```
 
 Tradeoffs:
 
 ```text
-The first install and future reinstalls require network access to PyPI.
-python-jobspy remains a separately resolved upstream dependency.
+The package closure is larger because it includes Chromium and data-science dependencies.
 npx may access the network when the auto-apply Playwright MCP server starts.
-The private environment is isolated but is not itself a pure Nix derivation.
-Upgrading ApplyPilot requires changing the pinned version and validating the workflow again.
+Updating ApplyPilot requires updating the flake input and validating the workflow again.
 ```
 
 ### Safety Workflow

@@ -21,6 +21,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    applypilot = {
+      url = "git+https://github.com/bluurn/ApplyPilot.git?ref=refs/heads/feat/eu-search-profile";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     codex-cli-nix.url = "github:sadjow/codex-cli-nix";
   };
 
