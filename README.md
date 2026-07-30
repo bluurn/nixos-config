@@ -141,6 +141,7 @@ just gc
 
 - Do not change `system.stateVersion` or `home.stateVersion` during routine upgrades.
 - Keep secrets outside Git. Runtime credentials are stored with `pass` or ignored `.env` files.
+  The `pass-otp` extension is available after activation for storing and generating TOTP codes.
 - Treat `hosts/t480/hardware-configuration.nix` as generated hardware state.
 - See [`docs/nixos-t480-field-notes.md`](docs/nixos-t480-field-notes.md) for the reasoning behind
   the current architecture and operational setup.

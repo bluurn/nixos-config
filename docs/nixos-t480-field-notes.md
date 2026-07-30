@@ -411,7 +411,9 @@ Always inspect the journal before guessing.
 
 ## 15. Secrets with pass / GPG
 
-Secrets are stored with `pass`.
+Secrets are stored with `pass`. The Home Manager package set also includes the `pass-otp`
+extension so TOTP secrets can live in the same encrypted password store instead of a separate
+mutable authenticator installation.
 
 Important entries:
 
@@ -425,7 +427,12 @@ Useful commands:
 ```bash
 pass show Personal/Mullvad
 pass show Services/qbittorrent/webui
+pass otp insert Services/example/totp
+pass otp Services/example/totp
 ```
+
+`pass otp insert` accepts an `otpauth://` URI. Existing entries and secrets remain unchanged when
+the extension is added; run the normal flake activation workflow before using the new subcommand.
 
 GPG lesson:
 

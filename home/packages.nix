@@ -8,6 +8,7 @@
     just
     lf
     pass
+    passExtensions.pass-otp
     ripgrep
     telegram-desktop
     tree
