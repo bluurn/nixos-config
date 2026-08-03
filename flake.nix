@@ -27,6 +27,11 @@
     };
 
     codex-cli-nix.url = "github:sadjow/codex-cli-nix";
+
+    devenv = {
+      url = "github:cachix/devenv";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

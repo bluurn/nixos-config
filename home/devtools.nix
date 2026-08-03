@@ -1,4 +1,6 @@
 _: {
+  programs.devenv.enable = true;
+
   programs = {
     git = {
       enable = true;

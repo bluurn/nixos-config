@@ -1,7 +1,8 @@
-{ ... }:
+{ inputs, ... }:
 
 {
   imports = [
+    inputs.devenv.homeManagerModules.devenv
     ./applypilot.nix
     ./gnome.nix
     ./neovim.nix
