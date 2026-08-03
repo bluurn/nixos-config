@@ -1,4 +1,7 @@
 { pkgs, inputs, ... }:
+let
+  inherit (pkgs.stdenv.hostPlatform) system;
+in
 {
   home.packages = with pkgs; [
     bat
@@ -17,10 +20,11 @@
     wl-clipboard
 
     # mine
-    inputs.dedup.packages.${pkgs.stdenv.hostPlatform.system}.default # <3
-    inputs.port-scanner.packages.${pkgs.stdenv.hostPlatform.system}.default # <3
+    inputs.dedup.packages.${system}.default # <3
+    inputs.port-scanner.packages.${system}.default # <3
 
     # 3rd party
-    inputs.codex-cli-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.codex-cli-nix.packages.${system}.default
+    devenv
   ];
 }
