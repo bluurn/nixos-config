@@ -48,13 +48,14 @@ let
             cookie="$(mktemp)"
             trap 'rm -f "$cookie"' EXIT
 
+            username="admin"
             password="$(pass show "$password_path" | head -n1)"
 
             login_result="$(
               curl -fsS \
                 -c "$cookie" \
                 -b "$cookie" \
-                --data-urlencode "username=admin" \
+                --data-urlencode "username=$username" \
                 --data-urlencode "password=$password" \
                 "$base_url/api/v2/auth/login"
             )"

@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785432638,
-        "narHash": "sha256-jL+TA+mJBFUgt83R+aaCrcWTFLbzRmtRcIoFQ2cu7DY=",
+        "lastModified": 1787240061,
+        "narHash": "sha256-70q/QDWOg2mOjXuwq0YhaDh/mwy4kInQvutorQb4mec=",
         "ref": "refs/heads/feat/eu-search-profile",
-        "rev": "e73561fdf05d376f3b5d6e7559882b169384f517",
-        "revCount": 71,
+        "rev": "a6d592172d17ba0fec22f4a50f8b2c03e88ba0f1",
+        "revCount": 135,
         "type": "git",
         "url": "https://github.com/bluurn/ApplyPilot.git"
       },
