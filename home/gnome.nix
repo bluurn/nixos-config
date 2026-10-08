@@ -10,7 +10,10 @@
       };
 
       "org/gnome/desktop/input-sources" = {
-        xkb-options = [ "compose:ralt" ];
+        xkb-options = [
+          "compose:ralt"
+          "ctrl:nocaps"
+        ];
       };
 
       "org/gnome/settings-daemon/plugins/power" = {
